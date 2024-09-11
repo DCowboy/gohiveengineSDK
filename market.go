@@ -84,7 +84,7 @@ func (s *Session) CancelOrder (action, txid string) (string, error){
 	
 	jstring := reformatAction(act)
 	//~ log.Println(jstring)
-	tx, err := s.hive.BroadcastJson(reqAuths, reqPostAuths, id, jstring, &s.wif)
+	tx, err := s.hive.BroadcastJson(reqAuths, reqPostAuths, id, jstring, &s.aKey)
 	if err != nil {
 		return "", err
 	}
@@ -114,7 +114,7 @@ func (s *Session) CreateOrder (action, symbol string, qty, price float64) (strin
 	jstring := reformatAction(act)
 	
 	//~ fmt.Println(jstring)
-	tx, err := s.hive.BroadcastJson(reqAuths, reqPostAuths, id, jstring, &s.wif)
+	tx, err := s.hive.BroadcastJson(reqAuths, reqPostAuths, id, jstring, &s.aKey)
 	if err != nil {
 		return "", err
 	}

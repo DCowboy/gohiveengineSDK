@@ -17,7 +17,7 @@ type Session struct {
 	engine           *heg.HiveEngineRpcNode
 	engineActId      string
 	account          string
-	wif              string
+	aKey              string
 }
 
 func NewSession(hiveUrl, engineUrl, account, wif string) *Session {
@@ -38,7 +38,7 @@ func NewSession(hiveUrl, engineUrl, account, wif string) *Session {
 	instance.engineActId = "mainnet-hive"
 	instance.engine = heg.NewHiveEngineRpc(urlEngine)
 	instance.account = account
-	instance.wif = wif
+	instance.aKey = wif
 	
 
 	return instance
@@ -48,11 +48,3 @@ func (s *Session) Status() (*heg.EngineStatus, error) {
 	return s.engine.GetStatus()
 }
 
-//~ func SendReq(instance Session, method, contract, table string, query map[string]string) interface{} {
-	//~ response, err := "abc123", error(nil)
-	//~ if err != nil {
-		//~ fmt.Println(err)
-	//~ }
-
-	//~ return response
-//~ }
