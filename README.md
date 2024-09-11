@@ -12,12 +12,15 @@ A session creates clients for Hive  and Hive Engine RPCs. If no Url is listed fo
 
 ### Example usage:
 To start a new session:
+session := gohe.NewSession(<hive url>, <engine url>, <account name>, <wif string>
 ```go
 import (
 	gohe "github.com/DCowboy/gohiveenginesdk"
 )
 
-session := gohe.NewSession(<hive url>, <engine url>, <account name>, <wif string>)
+var wifStr string = wifGottenFromSomewhereElse
+
+session := gohe.NewSession("", "", "Alice, wifVar)
 ```
 
 Get Hive Engine status:
@@ -79,6 +82,18 @@ txid, err := session.CancelOrder("buy", <open order's txid>)
 Create buy/sell Hive Engine order:
 ```go
 txid, err := session.CreateOrder("sell", "dec", <qty>, <price>)
+```
+
+To set up a different Engine call:
+```go
+findResult, err := session.Engine.QueryContract(<query params>)
+findOneResult, err := session.Engine.QueryContractByAcc(<query params>)
+```
+
+To set up a different Hive custom_json:
+```go
+txid, err := session.Hive.BroadcastJson(<requiredAuths>, <requiredPostAuths>, id, <custom json as string>, *session.aKey>)
+//session struct is currently only set up for a single key 
 ```
 
 ##### Since cfoxon's warning is so good, lets continue it!

@@ -77,7 +77,7 @@ func (s *Session) CancelOrder (action, txid string) (string, error){
 		ContractName: "market",
 		ContractAction: "cancel",
 		ContractPayload: cancelPayload{
-			Type: action,
+			Type: strings.ToLower(action),
 			Id: txid,
 		},
 	}
@@ -106,7 +106,7 @@ func (s *Session) CreateOrder (action, symbol string, qty, price float64) (strin
 		ContractName: "market",
 		ContractAction: action,
 		ContractPayload: tradePayload{
-			Symbol: symbol,
+			Symbol: strings.ToUpper(symbol),
 			Quantity: sQty,
 			Price: sPrice,
 		},
