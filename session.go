@@ -20,7 +20,7 @@ type Session struct {
 	aKey              string
 }
 
-func NewSession(hiveUrl, engineUrl, account, wif string) *Session, error{
+func NewSession(hiveUrl, engineUrl, account, wif string) (*Session, error) {
 	urlHive := ""
 	urlEngine := ""
 	if hiveUrl == "" {
