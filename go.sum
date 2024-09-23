@@ -1,3 +1,7 @@
+github.com/DCowboy/hiveenginego v0.2.0 h1:buUclCeRMMWwkdT9hwrpeps03GnPr23g6z3d+JEzB9s=
+github.com/DCowboy/hiveenginego v0.2.0/go.mod h1:AVxEvdAGrw9BgNveS5ncY9yyZrVhTf7kRuqcPPDMd5s=
+github.com/DCowboy/hivego v0.0.0-20240923144725-abe0bafc00c9 h1:AWfhzT+dKcxZxiovfjab90lg33MmGVyKsS9NlRKncs0=
+github.com/DCowboy/hivego v0.0.0-20240923144725-abe0bafc00c9/go.mod h1:N9SFy1GcSbPEHCqllYhGzPd9nDv/UlGZstppCFtSYXs=
 github.com/andybalholm/brotli v1.0.4 h1:V7DdXeJtZscaqfNuAdSRuRFzuiKlHSC/Zh3zl9qY3JY=
 github.com/andybalholm/brotli v1.0.4/go.mod h1:fO7iG3H7G2nSZ7m0zPUDn85XEX2GTukHGRSepvi9Eig=
 github.com/cfoxon/hivego v0.0.0-20230410131714-9f5a7f11f8df h1:Zn36yHqeYSJPQDn3Pl3XaeXVyv7ogQ24fBreyOiGKM8=

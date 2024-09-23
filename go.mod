@@ -1,16 +1,15 @@
 module github.com/DCowboy/gohiveenginesdk
 
-go 1.22.2
-
-replace github.com/DCowboy/hiveenginego => ../hiveenginego
+go 1.23.1
 
 require (
-	github.com/DCowboy/hiveenginego v0.0.0-00010101000000-000000000000
-	github.com/cfoxon/hivego v0.0.0-20230410131714-9f5a7f11f8df
+	github.com/DCowboy/hiveenginego v0.2.0
+	github.com/DCowboy/hivego v0.0.0-20240923144725-abe0bafc00c9
 )
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/cfoxon/hivego v0.0.0-20230410131714-9f5a7f11f8df // indirect
 	github.com/cfoxon/jrc v0.0.0-20221213194602-c4e904139b50 // indirect
 	github.com/cfoxon/jsonrpc2client v0.0.0-20220410030230-4f361e74821a // indirect
 	github.com/decred/base58 v1.0.4 // indirect

@@ -2,9 +2,9 @@ package gohiveenginesdk
 
 import (
 	//~ "fmt"
-	//~ "log"
+	"log"
 
-	hg "github.com/cfoxon/hivego"
+	hg "github.com/DCowboy/hivego"
 	heg "github.com/DCowboy/hiveenginego"
 )
 
@@ -20,7 +20,7 @@ type Session struct {
 	aKey              string
 }
 
-func NewSession(hiveUrl, engineUrl, account, wif string) *Session {
+func NewSession(hiveUrl, engineUrl, account, wif string) *Session, error{
 	urlHive := ""
 	urlEngine := ""
 	if hiveUrl == "" {
@@ -33,15 +33,26 @@ func NewSession(hiveUrl, engineUrl, account, wif string) *Session {
 	} else {
 		urlEngine = engineUrl
 	}
+	engineTest := heg.NewHiveEngineRpc(urlEngine)
+	_, eErr := engineTest.GetBalances(symbol, s.account, 1, 0)
+	if eErr != nil {
+		return nil, eErr
+	}
+	hiveTest :=  hg.NewHiveRpc(urlHive)
+	verify, hErr := hiveTest.checkAccount(&wif)
+	if hErr != nil {
+		return nil, hErr
+	}
+	log.Println("verify: %+v", verify) 
 	instance := new(Session)
-	instance.hive = hg.NewHiveRpc(urlHive)
+	instance.hive = hiveTest
 	instance.engineActId = "mainnet-hive"
-	instance.engine = heg.NewHiveEngineRpc(urlEngine)
+	instance.engine = engineTest
 	instance.account = account
 	instance.aKey = wif
 	
 
-	return instance
+	return instance, nil
 }
 
 func (s *Session) Status() (*heg.EngineStatus, error) {
