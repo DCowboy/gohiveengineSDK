@@ -72,7 +72,7 @@ type tradePayload struct {
 func (s *Session) CancelOrder (action, txid string) (string, error){
 	reqAuths := []string{s.account}
 	reqPostAuths := []string{}
-	id := string("ssc-" + s.engineActId)
+	id := string("ssc-" + s.chainId)
 	act := marketAction {
 		ContractName: "market",
 		ContractAction: "cancel",
@@ -84,7 +84,7 @@ func (s *Session) CancelOrder (action, txid string) (string, error){
 	
 	jstring := reformatAction(act)
 	//~ log.Println(jstring)
-	tx, err := s.hive.BroadcastJson(reqAuths, reqPostAuths, id, jstring, &s.aKey)
+	tx, err := s.hive.BroadcastJson(reqAuths, reqPostAuths, id, jstring, s.aKey)
 	if err != nil {
 		return "", err
 	}
@@ -97,7 +97,7 @@ func (s *Session) CancelOrder (action, txid string) (string, error){
 func (s *Session) CreateOrder (action, symbol string, qty, price float64) (string, error){
 	reqAuths := []string{s.account}
 	reqPostAuths := []string{}
-	id := string("ssc-" + s.engineActId)
+	id := string("ssc-" + s.chainId)
 	//convert floats to strings
 	sQty := strconv.FormatFloat(qty, 'f', 8, 64)
 	sPrice := strconv.FormatFloat(price, 'f', 8, 64)
@@ -114,7 +114,7 @@ func (s *Session) CreateOrder (action, symbol string, qty, price float64) (strin
 	jstring := reformatAction(act)
 	
 	//~ fmt.Println(jstring)
-	tx, err := s.hive.BroadcastJson(reqAuths, reqPostAuths, id, jstring, &s.aKey)
+	tx, err := s.hive.BroadcastJson(reqAuths, reqPostAuths, id, jstring, s.aKey)
 	if err != nil {
 		return "", err
 	}

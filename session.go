@@ -1,7 +1,7 @@
 package gohiveenginesdk
 
 import (
-	//~ "fmt"
+	"fmt"
 	"log"
 
 	hg "github.com/DCowboy/hivego"
@@ -15,9 +15,9 @@ var (
 type Session struct {
 	hive             *hg.HiveRpcNode
 	engine           *heg.HiveEngineRpcNode
-	engineActId      string
+	chainId          string
 	account          string
-	aKey              string
+	aKey             *string
 }
 
 func NewSession(hiveUrl, engineUrl, account, wif string) (*Session, error) {
@@ -34,22 +34,26 @@ func NewSession(hiveUrl, engineUrl, account, wif string) (*Session, error) {
 		urlEngine = engineUrl
 	}
 	engineTest := heg.NewHiveEngineRpc(urlEngine)
-	_, eErr := engineTest.GetBalances(symbol, s.account, 1, 0)
+	status, eErr := engineTest.GetStatus()
+	log.Printf("%+v", *status)
 	if eErr != nil {
-		return nil, eErr
+		return nil, fmt.Errorf("Engine Test err: %s", eErr)
 	}
 	hiveTest :=  hg.NewHiveRpc(urlHive)
-	verify, hErr := hiveTest.checkAccount(&wif)
+	verified, hErr := hiveTest.CheckAccount(account)
 	if hErr != nil {
-		return nil, hErr
+		return nil, fmt.Errorf("Hive Test err: %s", hErr)
 	}
-	log.Println("verify: %+v", verify) 
+	_, kErr := hiveTest.CheckKey(&wif, account)
+	if kErr != nil {
+		return nil, kErr
+	}
 	instance := new(Session)
 	instance.hive = hiveTest
-	instance.engineActId = "mainnet-hive"
+	instance.chainId = status.ChainId
 	instance.engine = engineTest
-	instance.account = account
-	instance.aKey = wif
+	instance.account = verified
+	instance.aKey = &wif
 	
 
 	return instance, nil
