@@ -15,6 +15,22 @@ var (
 	
 )
 
+type OrderBook struct {
+	heg.OrderBook
+}
+
+type PersonalOrders struct {
+	heg.PersonalOrders
+}
+
+type History struct {
+	heg.History
+}
+
+type Metrics struct {
+	heg.Metrics
+}
+
 func (s *Session) OrdersBook(action, symbol string, limit, offset int) (*heg.OrderBook, error) {
 	return s.engine.GetBook(action, symbol, limit, offset)
 }

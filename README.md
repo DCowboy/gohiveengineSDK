@@ -20,7 +20,7 @@ import (
 
 var wifStr string = wifGottenFromSomewhereElse
 
-session := gohe.NewSession("", "", "Alice, wifVar)
+session := gohe.NewSession("", "", "Alice, wifStr)
 ```
 
 Get Hive Engine status:
@@ -32,10 +32,28 @@ chainId := status.ChainId
 
 Get Balances for a token:
 ```go
-bxt := session.TokenBalances("BXT")
+bxt, err := session.TokenBalances("BXT")
 //Account name is supplied by session
 //Returns a struct pointer:
 stake := bxt.Stake
+// To use result as a type embed to sdk struct
+var bxtBalances gohe.Balances
+bxtBalances = gohe.Balances{*bxt}
+
+```
+
+*Note: verification of provided account and key are done automatically
+during session start*
+Verify account exists:
+```go
+acct, err := session.VerifyAcct()
+// will return first account name that matches (expected exact match) or an error.
+```
+
+Verify private key to account:
+```go
+valid, err := session.VerifyKey()
+//returns false and error for any reason the check failed. Returns true if valid
 ```
 
 Get buy/sell books for a token:
@@ -45,6 +63,9 @@ book, err :=  session.OrdersBook("buy", "BEE", 10, 0)
 // Returns a struct: book is still an array/slice
 buyBook := book.Book
 firstPrice := buyBook[0].Price
+// To use result as a type embed to sdk struct
+var orders gohe.OrderBook
+orders = gohe.OrderBook{*book}
 ```
 
 Get account's open orders for a token for a token:
@@ -55,7 +76,11 @@ orders, err :=  session.OpenOrders("BEE", 10, 0)
 // Returns a struct of each book struct (still returned as a slice)
 buyOrders := orders.Buy
 firstPrice := buyOrders.Book[0].Price
+// To use result as a type embed to sdk struct
+var orders gohe.PersonalOrders
+orders = gohe.PersonalOrders{*orders}
 ```
+
 Get trade history for a token:
 ```go
 history, err :=  session.TradesHistory("BEE", 10, 0)
@@ -64,14 +89,20 @@ history, err :=  session.TradesHistory("BEE", 10, 0)
 log := history.Log
 firstRecord := log[0]
 firstRecordTimestamp := log[0].Timestamp
+// To use result as a type embed to sdk struct
+var orders gohe.History
+orders = gohe.History{*history}
 ```
 
 Get metrics for a token:
 ```go
-book, err :=  session.TokenMetrics("BEE")
+response, err :=  session.TokenMetrics("BEE")
 //string arguments are case insensitive.
 // Returns an array of a struct - Metrics returns as an array because of the query method it uses.
 highest := (*response)[0].HighestBid
+// To use result as a type embed to sdk struct
+var orders gohe.Metrics
+orders = gohe.Metrics{*response}
 ```
 
 Cancel Hive Engine order:
@@ -92,7 +123,7 @@ findOneResult, err := session.Engine.QueryContractByAcc(<query params>)
 
 To set up a different Hive custom_json:
 ```go
-txid, err := session.Hive.BroadcastJson(<requiredAuths>, <requiredPostAuths>, id, <custom json as string>, *session.aKey>)
+txid, err := session.Hive.BroadcastJson(<requiredAuths>, <requiredPostAuths>, id, <custom json as string>, *<session.aKey>)
 //session struct is currently only set up for a single key 
 ```
 

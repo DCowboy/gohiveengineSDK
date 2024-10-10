@@ -35,7 +35,7 @@ func NewSession(hiveUrl, engineUrl, account, wif string) (*Session, error) {
 	}
 	engineTest := heg.NewHiveEngineRpc(urlEngine)
 	status, eErr := engineTest.GetStatus()
-	log.Printf("%+v", *status)
+	log.Printf("Hive Engine Status: %+v", *status)
 	if eErr != nil {
 		return nil, fmt.Errorf("Engine Test err: %s", eErr)
 	}

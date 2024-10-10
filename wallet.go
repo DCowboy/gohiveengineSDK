@@ -11,6 +11,10 @@ var (
 	
 )
 
+type Balances struct {
+	heg.Balances
+}
+
 func (s *Session) AccountName() string {
 	return s.account
 }
